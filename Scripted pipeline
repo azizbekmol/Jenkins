@@ -1,0 +1,11 @@
+node{
+    stage('Pull'){
+        sh 'echo "Git pull repo"'
+    }
+    stage('Build'){
+        sh 'echo "Building"'
+    }
+    stage('Deploy'){
+        sh 'echo "Deploying"'
+    }
+}
