@@ -11,10 +11,7 @@ node {
 
     withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-master-key', keyFileVariable: 'SSH_KEY', passphraseVariable: '', usernameVariable: 'SSH_USERNAME')]) {
         stage('Install Melodi'){
-            sh """
-                export ANSIBLE_HOST_KEY_CHECKING=False
-                ansible-playbook -i \"${ params.IP },\" --private-key $SSH_KEY -u $SSH_USERNAME -b main.yml 
-            """
+            ansiblePlaybook become: true, colorized: true, credentialsId: 'jenkins-master-key', disableHostKeyChecking: true, inventory: "${ params.IP },", playbook: 'main.yml'
         }
     }
 }
