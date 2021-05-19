@@ -1,3 +1,9 @@
+properties([
+    parameters([
+        string(defaultValue: '', description: 'Enter IP Address', name: 'IP', trim: true)
+    ])
+])
+
 node {
     stage("Pull repo"){
         git 'https://github.com/azizbekmol/ansible-melodi.git'
@@ -7,7 +13,7 @@ node {
         stage('Install Melodi'){
             sh """
                 export ANSIBLE_HOST_KEY_CHECKING=False
-                ansible-playbook -i \"157.230.14.40,\" --private-key $SSH_KEY -u $SSH_USERNAME -b main.yml 
+                ansible-playbook -i \"${ params.IP },\" --private-key $SSH_KEY -u $SSH_USERNAME -b main.yml 
             """
         }
     }
